@@ -12,6 +12,11 @@
       // Name, proponent, active
       const csv = [
         [ "John Doe","-5","5" ],
+        [ "Peter Parker","2","7" ],
+        [ "Jack the Ripper","-5","-10" ],
+        [ "Rudolf the Reindeer","8","9" ],
+        [ "Santa Claus","7","-6" ],
+        [ "Jesus H. C.","-6","-2" ],
         [ "Marylin Monroe","7","-4" ]
       ];
       const data = csv.map(entry => ({
@@ -19,7 +24,6 @@
         x: entry[1],
         y: entry[2]
       }));
-    //   const data = [{ name: "Foo", x: 4, y: 9 }, { name: "Bar", x: 5, y: 7 }];
 
       // Config and settings -----------------------------------
       const width = 1200,
