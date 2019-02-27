@@ -2,6 +2,8 @@
 
 Generate a scatter plot from coordinates and names using D3.js
 
+![Sample image](sample.png)
+
 ## How to
 
 - Edit `scatterplot.html` and add your CSV data as JS array into `const csv = ..`
