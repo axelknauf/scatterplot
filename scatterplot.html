@@ -11,8 +11,8 @@
       // Data to draw -----------------------------------
       // Name, proponent, active
       const csv = [
-        [ "John Doe","5","5" ],
-        [ "Marylin Monroe","7","4" ]
+        [ "John Doe","-5","5" ],
+        [ "Marylin Monroe","7","-4" ]
       ];
       const data = csv.map(entry => ({
         name: entry[0],
@@ -22,19 +22,21 @@
     //   const data = [{ name: "Foo", x: 4, y: 9 }, { name: "Bar", x: 5, y: 7 }];
 
       // Config and settings -----------------------------------
-      const width = 800,
-        height = 600;
+      const width = 1200,
+        height = 800;
       const xAxisConfig = {
-        min: 0, 
+        min: -10, 
         max: 10,
-        label: "Passive (0) - Active (10)"
+        label1: "Active",
+        label2: "Passive"
       };
       const yAxisConfig = {
-        min: 0, 
+        min: -10, 
         max: 10,
-        label: "Opponent (0) - Proponent (10)"
+        label1: "Proponent",
+        label2: "Opponent"
       };
-      const margin = { top: 20, right: 30, bottom: 30, left: 40 };
+      const margin = { top: 40, right: 40, bottom: 40, left: 40 };
 
       const circleRadius = 4;
       const circleLineWidth = 1.5;
@@ -57,7 +59,7 @@
 
       const xAxis = g =>
         g
-          .attr("transform", `translate(0,${height - margin.bottom})`)
+          .attr("transform", `translate(0,${height / 2})`)
           .call(d3.axisBottom(x))
           .call(g =>
             g
@@ -72,7 +74,7 @@
 
       const yAxis = g =>
         g
-          .attr("transform", `translate(${margin.left},0)`)
+          .attr("transform", `translate(${width / 2},0)`)
           .call(d3.axisLeft(y))
           .call(g =>
             g
@@ -145,10 +147,39 @@
           .attr("width", width)
           .attr("height", height);
 
+        // BEGIN x-axis 
         svg.append("g").call(xAxis);
-
+        svg.append("text")
+          .attr("class", "x label")
+          .attr("text-anchor", "end")
+          .attr("x", width - 10)
+          .attr("y", (height / 2) - 6)
+          .text(xAxisConfig.label1);
+        svg.append("text")
+          .attr("class", "x label")
+          .attr("text-anchor", "end")
+          .attr("x", 60)
+          .attr("y", (height / 2) - 6)
+          .text(xAxisConfig.label2);
+        // END x-axis 
+        
+        // BEGIN y-axis
         svg.append("g").call(yAxis);
-
+        svg.append("text")
+          .attr("class", "y label")
+          .attr("text-anchor", "end")
+          .attr("x", (width + margin.left) / 2)
+          .attr("y", 25)
+          .text(yAxisConfig.label1);
+        svg.append("text")
+          .attr("class", "y label")
+          .attr("text-anchor", "end")
+          .attr("x", (width + margin.left) / 2)
+          .attr("y", height - 10)
+          .text(yAxisConfig.label2);
+        // END y-axis
+        
+        // Draw data points
         svg
           .append("g")
           .attr("stroke", circleStrokeColor)
@@ -162,6 +193,7 @@
           .attr("cy", d => y(d.y))
           .attr("r", circleRadius);
 
+        // Draw data labels
         svg
           .append("g")
           .attr("font-family", labelFontFamily)
